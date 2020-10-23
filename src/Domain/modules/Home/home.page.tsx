@@ -13,7 +13,7 @@ import { Button, Icon, Logo, List, Item } from './../../Components';
 interface HomeProps {
   products: any
   LIST_HOME_PRODUCTS: () => any
-  setTopBar: ({}: any) => any
+  setTopBar: ({ }: any) => any
 }
 
 type RootStackParamList = {
@@ -23,8 +23,8 @@ type RootStackParamList = {
 type Props = StackScreenProps<RootStackParamList, 'Home'>;
 
 class Home extends React.PureComponent<HomeProps & Props, any> {
-  
-  constructor(props){
+
+  constructor(props) {
     super(props)
     const { name } = this.props.route;
     this.props.setTopBar({ title: name })
@@ -41,18 +41,20 @@ class Home extends React.PureComponent<HomeProps & Props, any> {
           <Logo />
 
           <Text />
-          <Text> Press Button to load Products </Text>
+          {loading && <Text> Waiting... </Text>}
+          {!loading && !success && <Text> Press Button to load Products </Text>}
+          {success && <Text> Press Button to Re-load Products </Text>}
           <Text />
           <Text />
           <Text />
 
           {
             success &&
-              <List data={data} renderItem={({ item }) => <Item {...item} />} />
+            <List data={data} renderItem={({ item }) => <Item {...item} />} />
           }
 
           {
-            error &&(
+            error && (
               <>
                 <Text> Ops, ocorreu algum erro </Text>
                 <Text />
@@ -60,8 +62,8 @@ class Home extends React.PureComponent<HomeProps & Props, any> {
                 <Text />
               </>
             )
-          }          
-          
+          }
+
           {
             loading
               ? <ActivityIndicator size='small' color={'red'} />
